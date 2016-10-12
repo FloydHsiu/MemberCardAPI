@@ -7,7 +7,7 @@ $db = new mysqli($hostname, $user, $pwd);
 $acc = $_POST['ACC'];
 $pwd = $_POST['PWD'];
 
-echo $acc.' '.$pwd;
+echo $acc.';'.$pwd;
 
 session_start();
 
