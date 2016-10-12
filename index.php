@@ -7,8 +7,6 @@ $db = new mysqli($hostname, $user, $pwd);
 $acc = $_POST['ACC'];
 $pwd = $_POST['PWD'];
 
-echo $acc.';'.$pwd;
-
 session_start();
 
 $result = $db->query("SELECT * FROM HCEproject.MEMBER WHERE ACCID = '".$acc."' and PWD ='".$pwd."'");
