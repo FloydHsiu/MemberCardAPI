@@ -7,7 +7,7 @@ $db = new mysqli($hostname, $user, $pwd);
 $acc = $_POST['ACC'];
 $pwd = $_POST['PWD'];
 
-if($acc !== '' && $pwd !== ''){
+if($acc != '' && $pwd != ''){
 	$IsAccExist = $db->query("SELECT * FROM HCEproject.MEMBER WHERE ACCID = '".$acc."'");
 	if ($result->num_rows > 0){
 		echo json_encode(array('valid' => false));
