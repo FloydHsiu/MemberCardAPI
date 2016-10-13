@@ -9,7 +9,7 @@ $pwd = $_POST['PWD'];
 
 if($acc != '' && $pwd != ''){
 	$IsAccExist = $db->query("SELECT * FROM HCEproject.MEMBER WHERE ACCID = '".$acc."'");
-	if ($result->num_rows > 0){
+	if ($IsAccExist->num_rows > 0){
 		echo json_encode(array('valid' => false));
 	}
 	else{
