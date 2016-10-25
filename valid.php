@@ -1,6 +1,6 @@
 <?php
 
 session_start();
-echo $_SESSION['id'];
+echo json_encode(array('valid'=> $_SESSION['valid']));
 
 ?>
