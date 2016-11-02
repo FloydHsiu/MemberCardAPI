@@ -7,7 +7,7 @@ $db = new mysqli($hostname, $user, $pwd);
 session_start();
 
 if($_SESSION['valid'] === true){
-    $AccId = $_SESSION['id'];
+    $AccId = $_SESSION['ID'];
     $ComId = $_POST['ComId'];
     $CardNum = $_POST['CardNum'];
     $Phone = $_POST['Phone'];
@@ -18,9 +18,9 @@ if($_SESSION['valid'] === true){
     if($result->num_rows > 0){
         $temp = $row->fetch_assoc();
         if($temp['Phone'] === $Phone && strcmp($temp['NationId'], $NationId) === 0){
-            $update_sql = "UPDATE HCEproject.CARD SET AccId='".$AccId."' WHERE ComId=".$ComId." and CardNum=".$CardNum;
+            $update_sql = "UPDATE HCEproject.CARD SET AccId=".$AccId." WHERE ComId=".$ComId." and CardNum=".$CardNum;
             if($db->query($update_sql) === true){
-                echo json_encode(array('state'=> true));
+                echo json_encode(array('state'=> 'success'));
             }
             else{
                 echo json_encode(array('state'=> 'Update error'));

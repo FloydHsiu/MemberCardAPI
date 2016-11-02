@@ -6,8 +6,8 @@
     session_start();
 
     if($_SESSION['valid'] === true){
-        $accid = $_SESSION['id'];
-        $result = $db->query("SELECT * FROM HCEproject.CARD WHERE ACCID = '".$accid."'");
+        $accid = $_SESSION['ID'];
+        $result = $db->query("SELECT * FROM HCEproject.CARD WHERE ACCID = ".$accid);
 
         $list = array();
 
