@@ -19,6 +19,9 @@
             }
         }
         
-        echo json_encode(array('CardList' => $list)); 
+        echo json_encode(array('CardList' => $list, 'state'=> 'success')); 
+    }
+    else{
+        echo json_encode(array('state'=> 'no login'));
     }
 ?>
