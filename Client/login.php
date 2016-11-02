@@ -1,6 +1,6 @@
 <?php
 
-require('dbInfo.php');
+require('../dbInfo.php');
 
 $db = new mysqli($hostname, $user, $pwd);
 
