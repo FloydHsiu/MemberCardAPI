@@ -16,7 +16,7 @@
                 //     'ComId'=> $row['ComId'], 
                 //     'ComName'=> $row['ComName']);
                 //array_push($list, $row['ComId']=> $row['ComName']);
-                $list[$row['ComId']] = $row['ComName'];
+                $list[''.$row['ComId']] = $row['ComName'];
             }
         }
         
