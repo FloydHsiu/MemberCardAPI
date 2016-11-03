@@ -12,14 +12,15 @@
 
         if($result->num_rows > 0){
             while($row = $result->fetch_assoc()){
-                $temp = array(
-                    'ComId'=> $row['ComId'], 
-                    'ComName'=> $row['ComName']);
-                array_push($list, $temp);
+                // $temp = array(
+                //     'ComId'=> $row['ComId'], 
+                //     'ComName'=> $row['ComName']);
+                //array_push($list, $row['ComId']=> $row['ComName']);
+                $list[$row['ComId']] = $row['ComName'];
             }
         }
         
-        echo json_encode(array('CardList' => $list, 'state'=> 'success')); 
+        echo json_encode(array('CompanyList' => $list, 'state'=> 'success')); 
     }
     else{
         echo json_encode(array('state'=> 'no login'));
