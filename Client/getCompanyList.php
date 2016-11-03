@@ -13,7 +13,7 @@
         if($result->num_rows > 0){
             while($row = $result->fetch_assoc()){
                 $temp = array(
-                    'ComId'=> $row['Comid'], 
+                    'ComId'=> $row['ComId'], 
                     'ComName'=> $row['ComName']);
                 array_push($list, $temp);
             }
