@@ -16,7 +16,7 @@ if($_SESSION['valid'] === true){
     $result = $db->query("select * from HCEproject.CARD where ComId=".$ComId." and CardNum=".$CardNum);
 
     if($result->num_rows > 0){
-        $temp = $row->fetch_assoc();
+        $temp = $result->fetch_assoc();
         echo json_encode($temp);
         if($temp['Phone'] == $Phone and strcmp($temp['NationId'], $NationId) == 0){
             $update_sql = "UPDATE HCEproject.CARD SET AccId=".$AccId." WHERE ComId=".$ComId." and CardNum=".$CardNum;
