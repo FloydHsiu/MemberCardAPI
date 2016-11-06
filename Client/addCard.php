@@ -18,9 +18,9 @@ if($_SESSION['valid'] === true){
     if($result->num_rows > 0){
         $temp = $row->fetch_assoc();
         echo json_encode($temp);
-        if($temp['Phone'] === $Phone && strcmp($temp['NationId'], $NationId) === 0){
+        if($temp['Phone'] == $Phone and strcmp($temp['NationId'], $NationId) == 0){
             $update_sql = "UPDATE HCEproject.CARD SET AccId=".$AccId." WHERE ComId=".$ComId." and CardNum=".$CardNum;
-            if($db->query($update_sql) === true){
+            if($db->query($update_sql) === TRUE){
                 echo json_encode(array('state'=> 'success'));
             }
             else{
@@ -39,5 +39,6 @@ else{
     echo json_encode(array('state'=> 'not login'));
 }
 
+$db->close();
 
 ?>
