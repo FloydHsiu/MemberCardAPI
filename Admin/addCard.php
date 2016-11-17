@@ -76,6 +76,9 @@ if($_SESSION['valid'] === true){
             echo json_encode(array('state'=> 'get cardnum error'));
         }
     }
+    else{
+        echo json_encode(array('state'=> 'not admin'));
+    }
 }
 else{
     echo json_encode(array('state'=> 'not login'));
