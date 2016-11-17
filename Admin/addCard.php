@@ -43,8 +43,6 @@ function add_card($ComId, $CardNum, $CardType, $ExpireTime, $NationId, $CardLeve
 
 $ComId = $_SESSION['ComId'];
 
-echo $CardNum = get_rand(1, 9999999999);
-
 if($_SESSION['valid'] === true){
     if($ComId != 0){
         /* ComId, CardNum, CardType, ExpireTime, NationId, CardLevel, Phone, AccId*/
@@ -60,6 +58,7 @@ if($_SESSION['valid'] === true){
                     $Phone = $_POST['Phone'];
                     if($NationId != '' && $Phone!= ''){// Check NationId, Phone Type
                         add_card($ComId, $CardNum, $CardType, $ExpireTime, $NationId, $CardLevel, $Phone);
+                        echo json_encode(array('state'=> 'success'));
                     }
                     else{
                         echo json_encode(array('state'=> 'wrong NationId, Phone type'));
