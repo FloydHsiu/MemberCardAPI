@@ -58,7 +58,6 @@ if($_SESSION['valid'] === true){
                     $Phone = $_POST['Phone'];
                     if($NationId != '' && $Phone!= ''){// Check NationId, Phone Type
                         add_card($ComId, $CardNum, $CardType, $ExpireTime, $NationId, $CardLevel, $Phone);
-                        echo $Phone;
                         echo json_encode(array('state'=> 'success'));
                     }
                     else{
