@@ -42,6 +42,8 @@ function add_card($ComId, $CardNum, $CardType, $ExpireTime, $NationId, $CardLeve
 
 $ComId = $_SESSION['ComId'];
 
+echo $ComId;
+
 if($_SESSION['valid'] === true){
     if($ComId != 0){
         /* ComId, CardNum, CardType, ExpireTime, NationId, CardLevel, Phone, AccId*/
