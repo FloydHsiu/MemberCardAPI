@@ -42,12 +42,11 @@ function add_card($ComId, $CardNum, $CardType, $ExpireTime, $NationId, $CardLeve
 
 $ComId = $_SESSION['ComId'];
 
-echo $ComId;
+echo $CardNum = get_rand(1, 9999999999);
 
 if($_SESSION['valid'] === true){
     if($ComId != 0){
         /* ComId, CardNum, CardType, ExpireTime, NationId, CardLevel, Phone, AccId*/
-        $i = 0;
         $CardNum = get_valid_cardnum($ComId);
         if($CardNum != false){
             $CardType = $_POST['CardType'];
