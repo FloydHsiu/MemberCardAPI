@@ -8,6 +8,7 @@ $db = new mysqli($hostname, $user, $pwd);
 session_start();
 
 function is_card_exist($ComId, $CardId){
+    global $db;
     $query = $db->query('SELECT * FROM HCEproject.CARD WHERE ComId='.$ComId.' and CardId='.$CardId);
     if($query->num_rows > 0){
         return true;
@@ -32,6 +33,7 @@ function get_valid_cardnum($ComId){
 }
 
 function add_card($ComId, $CardNum, $CardType, $ExpireTime, $NationId, $CardLevel, $Phone){
+    global $db;
     $query = $db->query('INSERT INTO HCEproject.CARD VALUES ('
                         .$ComId.','.$CardNum.',\''.$CardType.'\',\''.$ExpireTime
                         .'\',\''.$NationId.'\',\''.$CardLevel.'\','.$Phone.')');
