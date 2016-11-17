@@ -16,6 +16,7 @@ if ($result->num_rows > 0){
 	$_SESSION['valid']=true;
 	$_SESSION['id']= $acc;
 	$_SESSION['ID'] = $temp['ID'];
+	$_SESSION['ComId'] = $temp['ComId'];
 }
 else{
 	echo json_encode(array('valid' => false));
