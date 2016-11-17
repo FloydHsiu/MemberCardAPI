@@ -34,7 +34,8 @@ function get_valid_cardnum($ComId){
 
 function add_card($ComId, $CardNum, $CardType, $ExpireTime, $NationId, $CardLevel, $Phone){
     global $db;
-    $query = $db->query('INSERT INTO HCEproject.CARD VALUES ('
+    $query = $db->query('INSERT INTO HCEproject.CARD (ComId, CardNum, CardType, ExpireTime, NationId
+                        ,CardLevel, Phone)'.' VALUES ('
                         .$ComId.','.$CardNum.',\''.$CardType.'\',\''.$ExpireTime
                         .'\',\''.$NationId.'\',\''.$CardLevel.'\','.$Phone.')');
     return $query;
@@ -52,6 +53,7 @@ if($_SESSION['valid'] === true){
             $CardType = $_POST['CardType'];
             $ExpireTime = $_POST['ExpireTime'];
             if( $CardType != '' && $ExpireTime != ''){//Check CardType, ExpireTime data format
+            // Permanent, Limited, Times
                 $CardLevel = $_POST['CardLevel'];
                 if($CardLevel != ''){//Check CardLevel data format
                     $NationId = $_POST['NationId'];
