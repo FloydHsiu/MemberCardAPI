@@ -1,6 +1,13 @@
 <?php
 
 session_start();
-echo json_encode(array('valid'=> $_SESSION['valid']));
+
+$output = array('isLogin'=> false, 'isAdmin'=>$_SESSION['valid']);
+
+if($_SESSION['ComId'] != 0){
+    $output['isAdmin'] = true;
+}
+
+echo json_encode($output);
 
 ?>
