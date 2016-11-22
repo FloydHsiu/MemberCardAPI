@@ -23,7 +23,9 @@ $CardNum = $_POST['CardNum'];
 $AccId = $_SESSION['ID'];
 
 if($_SESSION['valid']){
-    if(isCardAndAccMatch($ComId, $CardNum, $AccId)){
+    $temp = isCardAndAccMatch($ComId, $CardNum, $AccId);
+    echo $temp;
+    if($temp){
         $transcode = get_randString(20);
         $expire = time() + 60*10;
         $db->query("INSERT INTO HCEproject.TRANSAC(COMID, CARDNUM, TRANSCODE, EXPIRE)".
