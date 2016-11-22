@@ -9,7 +9,7 @@ session_start();
 
 function isCardAndAccMatch($ComId, $CardNum, $AccId){
     global $db;
-    $result = $db->query("SELECT * FROM HECproject.CARD WHERE ComId=".$ComId."and CardNum=".$CardNum."and AccId=".$AccId);
+    $result = $db->query("SELECT * FROM HECproject.CARD WHERE (ComId, CardNum, AccId) IN ( (".$ComId.",".$CardNum.",".$AccId."))");
     if($result->num_rows > 0){
         return true;
     }
