@@ -31,7 +31,7 @@ if($_SESSION['valid']){
         echo json_encode(array('state'=>'success', 'transcode'=>$transcode));
     }
     else{
-        echo json_encode(array('state'=>'no card access'));
+        echo json_encode(array('state'=>'no card access', 'AccId'=>$AccId, 'ComId'=>$ComId, 'Cardnum'=>$CardNum));
     }
 }
 else{
