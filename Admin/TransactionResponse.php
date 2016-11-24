@@ -11,7 +11,6 @@ $ComId = $_SESSION['ComId'];
 
 
 $result = $db->query("SELECT * FROM HCEproject.TRANSAC WHERE TRANSCODE='".$TransCode."'");
-echo ("SELECT * FROM HCEproject.TRANSAC WHERE TRANSCODE='$TransCode'");
 if($result->num_rows > 0){
     $temp = $result->fetch_assoc();
     $trans_comid = $temp['COMID'];
