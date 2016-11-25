@@ -17,7 +17,7 @@ if($result->num_rows > 0){
     $trans_cardnum = $temp['CARDNUM'];
     $trans_expire = $temp['EXPIRE'];
     if($trans_comid == $ComId){
-        if($trans_expire < time()){
+        if($trans_expire > time()){
             //Start transaction
             echo json_encode(array('state'=>'success'));
         }
