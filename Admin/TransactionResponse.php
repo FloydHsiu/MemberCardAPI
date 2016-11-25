@@ -22,7 +22,7 @@ if($result->num_rows > 0){
             echo json_encode(array('state'=>'success'));
         }
         else{
-            echo json_encode(array('state'=>'TransactionOverTime'))
+            echo json_encode(array('state'=>'TransactionOverTime'));
         }
     }
     else{
