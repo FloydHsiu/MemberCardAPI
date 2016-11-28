@@ -6,7 +6,7 @@ $db = new mysqli($hostname, $user, $pwd);
 
 function getCard($ComId, $CardNum){
     global $db;
-    $result = $db->query("SELECT * FROM HCEproject.CARD WHERE ((ComId, CardNum) IN ( (".$ComId.",".$CardNum."))) and AccId=".$AccId);
+    $result = $db->query("SELECT * FROM HCEproject.CARD WHERE ((ComId, CardNum) IN ( ($ComId, $CardNum)))");
     if($result->num_rows > 0){
         $temp = $result->fetch_assoc();
         return $temp;
