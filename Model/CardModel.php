@@ -17,12 +17,12 @@ function getCard($ComId, $CardNum){
 }
 
 function useCard($Card, $Times){
-    $CardType = $Card['CardType'][0];
+    $CardType = $Card['CardType'];
     $ExpireTime = $Card['ExpireTime'];
-    if($CardType == 'P'){
+    if(strcmp($CardType, "Permanent") === 0){
         return true;
     }
-    else if( $CardType == 'L'){
+    else if( strcmp($CardType, "Limited") === 0){
         $expiretime = intval($ExpireTime);
         if($expiretime > time()){
             return true;
@@ -31,7 +31,7 @@ function useCard($Card, $Times){
             return false;
         }
     }
-    else if( $CardType == 'T'){
+    else if( strcmp($CardType, "Times") === 0){
         $temp = split("/", $ExpireTime);
         if(count($temp) > 1){
             $all = intval($temp[1]);
