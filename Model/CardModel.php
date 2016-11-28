@@ -19,6 +19,7 @@ function getCard($ComId, $CardNum){
 function useCard($Card, $Times){
     $CardType = $Card['CardType'];
     $ExpireTime = $Card['ExpireTime'];
+    echo $CardType."/".$ExpireTime;
     if(strcmp($CardType, "Permanent") === 0){
         return true;
     }
