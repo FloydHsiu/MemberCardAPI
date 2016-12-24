@@ -10,6 +10,8 @@ $user_data = array(
                  'SNAME'=>'Sname',
                  'NICKNAME'=>'Nickname');
 
+// $user_data = array();
+
 $id = $userinfomodel->insert($user_data);
 
 if( $id === FALSE){
