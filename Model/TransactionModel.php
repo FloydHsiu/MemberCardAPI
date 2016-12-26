@@ -22,39 +22,12 @@ class TransactionModel{
         } 
     }
 
-    function create(){
-        include('../random.php');
-        $try_times = 5;
-        for($i=0; $i<=$try_times; $i++){
-            // get random string
-            $code = get_randString(10);
-            $createtime = date('Y-m-d H:i:s'); 
-            $step = 0;
-            $id = $this->insert($code, $createtime, $step);
-            if( $id === FALSE){
-
-            }else{
-                return $id;
-            }
-        }
-        return FALSE;
-    }
-
-    function insert($code, $createtime, $step){
+    function insert($cardid, $accountid, $adminid, $content){
         // insert
-        $insert_sql = "INSERT INTO $this->db_name(RANDCODE,CREATETIME,STEP) VALUES ('$code','$createtime', $step)";
+        $now = date('Y-m-d H:i:s');
+        $insert_sql = "INSERT INTO $this->db_name(CARDID,ACCOUNTID,ADMINID,CONTENT,CREATETIME) VALUES ($cardid,$accountid,$adminid,'$content','$now')";
         if( $this->db->query($insert_sql) === TRUE){
             return $this->db->insert_id;
-        }else{
-            return FALSE;
-        }
-    }
-
-    function update($id, $step){
-        // update
-        $update_sql = "UPDATE $this->db_name SET STEP=$step WHERE ID=$id";
-        if( $this->db->query($update_sql) === TRUE ){
-            return TRUE;
         }else{
             return FALSE;
         }
@@ -76,6 +49,21 @@ class TransactionModel{
         $item = $this->db->query($select_sql);
         if( $item->num_rows > 0){
             return $item->fetch_assoc();
+        }else{
+            return FALSE;
+        }
+    }
+
+    function selectby($attr, $value){
+        // select
+        $select_sql = "SELECT * FROM $this->db_name WHERE $attr=$value";
+        $item = $this->db->query($select_sql);
+        if($item->num_rows > 0){
+            $selected = array();
+            while( $temp = $item->fetch_assoc()){
+                array_push($selected, $temp);
+            }
+            return $selected;
         }else{
             return FALSE;
         }
