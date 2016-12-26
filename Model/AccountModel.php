@@ -16,14 +16,21 @@ class AccountModel{
     }
 
     function insert($accid, $pwd, $value_contenter){
+        // check input: accid, pwd
+        $accid = $this->check_accid_value($accid);
+        $pwd = $this->check_pwd_value($pwd);
+        // check if accid is exist
+        if( $this->selectbyaccid($accid) === FALSE){
+            //the accid is not exist yet
+        }
+        else{
+            die(json_encode(array('STATE' => false, 'ERROR'=>'accid_is_exist')));
+        }
         // insert userinfo
         $userinfoid = $this->userinfomodel->insert($value_contenter);
         if( $userinfoid === FALSE){
-            return FALSE;
+            die(json_encode(array('STATE' => false, 'ERROR'=>'insert_userinfo_fail_is')));
         }
-        //check input: accid, pwd
-        $accid = $this->check_accid_value($accid);
-        $pwd = $this->check_pwd_value($pwd);
         //insert
         $insert_sql = "INSERT INTO $this->db_name(ACCID,PWD,USERINFOID) VALUES ('$accid', '$pwd', $userinfoid)";
         if( $this->db->query( $insert_sql ) === TRUE){
@@ -68,6 +75,17 @@ class AccountModel{
     function select($id){
         //select
         $select_sql = "SELECT * FROM $this->db_name WHERE ID=$id";
+        $item = $this->db->query($select_sql);
+        if( $item->num_rows > 0){
+            return $item->fetch_assoc();
+        }else{
+            return FALSE;
+        }
+    }
+
+    function selectbyaccid($accid){
+        //select
+        $select_sql = "SELECT * FROM $this->db_name WHERE ACCID='$accid'";
         $item = $this->db->query($select_sql);
         if( $item->num_rows > 0){
             return $item->fetch_assoc();
