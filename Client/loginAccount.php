@@ -2,6 +2,8 @@
 
 error_reporting(0);
 
+session_start();
+
 include('../Model/AccountModel.php');
 $accountmodel = new AccountModel();
 $userinfomodel = new UserInfoModel();
