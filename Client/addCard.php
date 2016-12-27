@@ -1,43 +1,46 @@
 <?php
 
-require('../dbInfo.php');
-
-$db = new mysqli($hostname, $user, $pwd);
-
 session_start();
 
-if($_SESSION['valid'] === true){
-    $AccId = $_SESSION['ID'];
-    $ComId = $_POST['ComId'];
-    $CardNum = $_POST['CardNum'];
-    $Phone = $_POST['Phone'];
-    $NationId = $_POST['NationId'];
+include('../Model/CardModel.php');
+$cardmodel = new CardModel();
 
-    $result = $db->query("select * from HCEproject.CARD where ComId=".$ComId." and CardNum=".$CardNum);
+$num = $_POST['NUM'];
+$companyid = $_POST['COMPANYID'];
+$phone = $_POST['PHONE'];
+$idcard = $_POST['IDCARD'];
 
-    if($result->num_rows > 0){
-        $temp = $result->fetch_assoc();
-        if($temp['Phone'] == $Phone and strcmp($temp['NationId'], $NationId) == 0){
-            $update_sql = "UPDATE HCEproject.CARD SET AccId=".$AccId." WHERE ComId=".$ComId." and CardNum=".$CardNum;
-            if($db->query($update_sql) === TRUE){
-                echo json_encode(array('state'=> 'success'));
-            }
-            else{
-                echo json_encode(array('state'=> 'Update error'));
-            }
-        }
-        else{
-            echo json_encode(array('state'=> 'Wrong card certificate'));
-        }
-    }
-    else{
-        echo json_encode(array('state'=> 'no this card'));
-    }
-}
-else{
-    echo json_encode(array('state'=> 'not login'));
+if( $_SESSION['ACCOUNTID'] == ''){
+    die( json_encode( array('STATE'=>false, 'ERROR'=>'not_login_fail')));
 }
 
-$db->close();
+if( $num == '' or $companyid == '' or $phone == '' or $idcard == ''){
+    die( json_encode( array('STATE'=>false, 'ERROR'=>'empty_input_fail')));
+}
+
+$card = $cardmodel->selectbynumcompanyid($num, $companyid);
+
+if( $card === FALSE){
+    die( json_encode( array('STATE'=>false, 'ERROR'=>'card_not_exist_fail')));
+}
+
+$verifyid = $card['VERIFYID'];
+$verifymodel = new VerifyModel();
+
+$verify = $verifymodel->select($verifyid);
+
+if($verify === FALSE){
+    die( json_encode( array('STATE'=>false, 'ERROR'=>'verify_not_exist_fail')));
+}
+
+if( strcmp($phone, $verify['PHONE']) == 0 and strcmp($idcard, $verify['IDCARD'])){
+    if( $cardmodel->update($card['ID'], 'ACCOUNTID', $_SESSION['ACCOUNTID']) === FALSE){
+        die( json_encode( array('STATE'=>false, 'ERROR'=>'update_fail')));
+    }else{
+        echo  json_encode( array('STATE'=>true));
+    }
+}else{
+     die( json_encode( array('STATE'=>false, 'ERROR'=>'card_verify_fail')));
+}
 
 ?>
