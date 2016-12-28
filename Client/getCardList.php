@@ -1,31 +1,21 @@
 <?php 
-    require('../dbInfo.php');
+error_reporting(0);
+    
+session_start();
 
-    $db = new mysqli($hostname, $user, $pwd);
+include('../Model/CardModel.php');
 
-    session_start();
+$cardmodel = new CardModel();
 
-    if($_SESSION['valid'] === true){
-        $accid = $_SESSION['ID'];
-        $result = $db->query("SELECT * FROM HCEproject.CARD WHERE ACCID = ".$accid);
+if( $_SESSION['ACCOUNTID'] == ''){
+    die( json_encode( array('STATE'=>false, 'ERROR'=>'not_login_fail')));
+}
 
-        $list = array();
+$cards = $cardmodel->selectby('ACCOUNTID', $_SESSION['ACCOUNTID']);
+if( $cards === FALSE ){
+    die( json_encode( array('STATE'=>false, 'ERROR'=>'select_fail')));
+}
 
-        if($result->num_rows > 0){
-            while($row = $result->fetch_assoc()){
-                $temp = array(
-                    'ComId'=> $row['ComId'], 
-                    'CardNum' => $row['CardNum'], 
-                    'CardType' => $row['CardType'],
-                    'ExpireTime' => $row['ExpireTime'],
-                    'CardLevel' => $row['CardLevel']);
-                array_push($list, $temp);
-            }
-        }
-        
-        echo json_encode(array('CardList' => $list, 'state'=> 'success'));   
-    }
-    else{
-        echo json_encode(array('state'=> 'no login'));
-    }
+echo json_encode( array('STATE'=>true, 'CARDS'=>json_encode($cards)) );
+
 ?>

@@ -46,6 +46,9 @@ else if( strcmp($option, 'LOGIN') == 0){
     $pwd = $_POST['PWD'];
     loginAdmin($adminid, $pwd);
 }
+else if( strcmp($option, 'LOGOUT') == 0){
+    logoutAdmin();
+}
 else{
     die( json_encode(array('STATE'=>false, 'ERROR'=>'wrong_option')) );
 }
@@ -134,6 +137,12 @@ function loginAdmin($adminid, $pwd){
     }else{
         die( json_encode( array('STATE'=>false, 'ERROR'=>'empty_id_pwd')) );
     }
+}
+
+function logoutAdmin(){
+    $_SESSION['ADMINID'] = '';
+    $_SESSION['COMPANYID'] = '';
+    echo json_encode( array('STATE'=>true));
 }
 
 function sysadminpwdVerify(){
