@@ -20,6 +20,12 @@ if( strcmp($option, 'START') == 0){
 else if( strcmp($option, 'STEP0') == 0){
     transaction_step_0();
 }
+else if( strcmp($option, 'SELECTBYADMIN') == 0){
+    selectByAdmin();
+}
+else if( strcmp($option, 'SELECTBYACCOUNT') == 0){
+    selectByAccount();
+}
 else{
     die( json_encode(array('STATE'=>false, 'ERROR'=>'wrong_option')) );
 }
@@ -115,6 +121,9 @@ function startTransaction(){
 
 
 function transaction_step_0(){
+    global $transactionmodel;
+    global $transcodemodel;
+    global $cardmodel;
     if( $_SESSION['ADMINID'] == '' or $_SESSION['COMPANYID'] == ''){
         die( json_encode(array('STATE'=>false, 'ERROR'=>'not_login_fail')) );
     }
@@ -209,6 +218,34 @@ function transaction_step_0(){
 
     $transcodemodel->update($transcodeid, 1);
     echo json_encode( array('STATE'=>true) );
+}
+
+function selectByAdmin(){
+    global $transactionmodel;
+
+    if( !isset($_SESSION['ADMINID']) or !isset($_SESSION['COMPANYID']) ){
+        die( json_encode( array('STATE'=>false, 'ERROR'=>'not_login_fail')));
+    }
+
+    $transactions = $transactionmodel->selectby('ADMINID', $_SESSION['ADMINID']);
+    if( $transactions === FALSE){
+        die( json_encode( array('STATE'=>false, 'ERROR'=>'select_fail')));
+    }
+    echo json_encode( array('STATE'=>true, 'TRANSACTIONS'=>json_encode($transactions)) );
+}
+
+function selectByAccount(){
+    global $transactionmodel;
+
+    if( !isset($_SESSION['ACCOUNTID']) or !isset($_SESSION['USERINFOID']) ){
+        die( json_encode( array('STATE'=>false, 'ERROR'=>'not_login_fail')));
+    }
+
+    $transactions = $transactionmodel->selectby('ACCOUNTID', $_SESSION['ACCOUNTID']);
+    if( $transactions === FALSE){
+        die( json_encode( array('STATE'=>false, 'ERROR'=>'select_fail')));
+    }
+    echo json_encode( array('STATE'=>true, 'TRANSACTIONS'=>json_encode($transactions)) );
 }
 
 ?>

@@ -107,6 +107,20 @@ class AccountModel{
             return FALSE;
         }
     }
+
+    function sendEmailVerify($id){
+        $account = $this->select($id);
+        $userinfo = $this->userinfomodel->select($account['USERINFOID']);
+
+        include("../Mail/SendMailVerify.php");
+        $temp = array('USERINFOID'=> $userinfoid);
+        $temp = json_encode($temp);
+        $temp = base64_encode($temp);
+        include("../Controller/Addr.php");
+        $addr = $EmailVerifyAddr."&VERIFY=".$temp;
+
+        SendMailVerify($userinfo['NAME'], $userinfo['EMAIL'], $addr);
+    }
     
     function check_accid_value($accid){
         return $accid;
