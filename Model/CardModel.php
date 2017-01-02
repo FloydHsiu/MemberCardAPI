@@ -58,6 +58,25 @@ class CardModel{
         }
     }
 
+    function useCard($id, $times){
+        $card = $this->select($id);
+        if( $card === FALSE ){
+            return FALSE;
+        }
+
+        $expire = $card['EXPIRE'];
+        if( $card['TYPE'] == 2){
+            $temp = json_decode( $expire );
+            if( $temp['USED'] + $times > $temp['ALL']){
+                return FALSE;
+            }
+            else{
+                $temp['USED'] = $times + $temp['USED'];
+            }
+        }
+        return $this->update($id, "EXPIRE", json_encode($temp));
+    }
+
     function delete($id){
         // delete 
         $delete_sql = "DELETE FROM $this->db_name WHERE ID=$id";
@@ -106,12 +125,42 @@ class CardModel{
     }
 
     function check_type_expire_value($type, $expire){
-        return array('TYPE'=>$type, 'EXPIRE'=>$expire);
+        if( $type == 0){
+            return array('TYPE'=>$type, 'EXPIRE'=>$expire);
+        }
+        else if( $type == 1){
+            if( strtotime($expire) === FALSE){
+                die( json_encode(array('STATE'=>false, 'ERROR'=>'wrong_expire_value')) );
+            }
+            return array('TYPE'=>$type, 'EXPIRE'=>$expire);
+        }
+        else if( $type == 2){
+            $decode = json_decode( $expire );
+            if( $decode === NULL){
+                die( json_encode(array('STATE'=>false, 'ERROR'=>'wrong_expire_value')) );
+            }
+            else{
+                if( $decode['ALL'] == '' and $decode['USED'] == ''){
+                    die( json_encode(array('STATE'=>false, 'ERROR'=>'wrong_expire_value')) );
+                }
+                return array('TYPE'=>$type, 'EXPIRE'=>$expire);
+            }
+        }
+        else{
+            die( json_encode(array('STATE'=>false, 'ERROR'=>'wrong_type_value')) );
+        }
     }
 
     function check_level_value($level){
         return $level;
     }
+
+    /* 
+    
+    $type = 0, 1, 2
+    $expire = 'p' , 'timestamp(Y-m-d)', '{'ALL':30, 'USED': 0}' 
+    
+    */
 }
 
 ?>

@@ -1,15 +1,5 @@
 <?php 
 
-require('../dbInfo.php');
-
-$db = new mysqli($hostname, $user, $pwd);
-
-function deleteTransaction($TransCode){
-    global $db;
-    $sql = "DELETE FROM HCEproject.TRANSAC WHERE TRANSCODE='$TransCode'";
-    $db->query($sql);
-}
-
 class TransactionModel{
     var $db;
     var $db_name = "hceproject.TRANSACTION";
@@ -22,10 +12,19 @@ class TransactionModel{
         } 
     }
 
-    function insert($cardid, $accountid, $adminid, $content){
-        // insert
+    function create($cardid, $accountid, $adminid, $content){
         $now = date('Y-m-d H:i:s');
-        $insert_sql = "INSERT INTO $this->db_name(CARDID,ACCOUNTID,ADMINID,CONTENT,CREATETIME) VALUES ($cardid,$accountid,$adminid,'$content','$now')";
+        $id = $this->insert($cardid, $accountid, $adminid, $content, $now);
+        if( $id === FALSE){
+            return FALSE;
+        }else{
+            return $id;
+        }
+    }
+
+    function insert($cardid, $accountid, $adminid, $content, $createtime){
+        // insert
+        $insert_sql = "INSERT INTO $this->db_name(CARDID,ACCOUNTID,ADMINID,CONTENT,CREATETIME) VALUES ($cardid,$accountid,$adminid,'$content','$createtime')";
         if( $this->db->query($insert_sql) === TRUE){
             return $this->db->insert_id;
         }else{

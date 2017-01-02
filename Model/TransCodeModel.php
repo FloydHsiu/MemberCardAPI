@@ -50,6 +50,17 @@ class TransCodeModel{
         }
     }
 
+    function updateCreateTime($id){
+        $createtime = date('Y-m-d H:i:s');
+        // update
+        $update_sql = "UPDATE $this->db_name SET CREATETIME='$createtime' WHERE ID=$id";
+        if( $this->db->query($update_sql) === TRUE ){
+            return TRUE;
+        }else{
+            return FALSE;
+        }
+    }
+
     function delete($id){
         // delete
         $delete_sql = "DELETE FROM $this->db_name WHERE ID=$id";

@@ -44,6 +44,4 @@
 		}
 		return $str;
 	}
-
-	echo get_randNumString(10);
 ?>
