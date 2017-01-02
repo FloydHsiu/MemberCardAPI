@@ -13,7 +13,7 @@ if( strcmp($option, 'SELECT') == 0){
     selectUserInfo();
 }
 else if(strcmp($option, 'EMAILAUTH') == 0){
-    verifyEmail();
+    updateEmailAuthorize();
 }
 else{
     die( json_encode(array('STATE'=>false, 'ERROR'=>'wrong_option')) );
