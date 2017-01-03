@@ -44,15 +44,15 @@ function updateEmailAuthorize(){
     if( $verify === FALSE ){
         die( json_encode( array('STATE'=>false, 'ERROR'=>'decode_fail')));
     }
-
-    $info = json_decode($verify);
+    
+    $info = json_decode($verify, true);
     if( $info === FALSE ){
         die( json_encode( array('STATE'=>false, 'ERROR'=>'decode_fail')));
     }
 
     $userinfoid = $info['USERINFOID'];
 
-    if( $userinfomodel->update_isauthorizeemail($userinfoid, true) === FALSE){
+    if( $userinfomodel->update_isauthorizeemail($userinfoid, 1) === FALSE){
         die( json_encode( array('STATE'=>false, 'ERROR'=>'update_fail')));
     }
 

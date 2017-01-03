@@ -20,7 +20,7 @@ else if( strcmp($option, 'LOGOUT') == 0){
     logoutAccount();
 }
 else if( strcmp($option, 'SENDEMAILVERIFY') == 0){
-
+    sendEmailVerify();
 }
 else{
     die( json_encode(array('STATE'=>false, 'ERROR'=>'wrong_option')) );
