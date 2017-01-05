@@ -3,6 +3,7 @@
 require('../dbInfo.php');
 require('../Model/CardModel.php');
 require('../Model/TransactionModel.php');
+require('../Model/TransLogModel.php');
 
 $db = new mysqli($hostname, $user, $pwd);
 
@@ -23,6 +24,7 @@ if($result->num_rows > 0){
             $card = getCard($trans_comid, $trans_cardnum);
             if(useCard($card, 1)){
                 deleteTransaction($TransCode);
+                createTransLog($card['ComId'], $card['CardNum'], $TransCode, $card['AccId'], $_SESSION['ID']);
                 echo json_encode(array('state'=>'success'));
             }
             else{
