@@ -21,7 +21,7 @@ function createTransLog($comid, $cardnum, $transcode, $client, $admin){
 
 function selectForConfirm($comid, $cardnum, $transcode){
     global $db;
-    if( isset($comid) and isset($cardNum) and isset($transcode) ){
+    if( isset($comid) and isset($cardnum) and isset($transcode) ){
         $select_sql = "SELECT * FROM HCEproject.TransLog WHERE ComID=$comid and CardNum=$cardnum and TRANSCODE='$transcode'";
         $result = $db->query( $select_sql );
         if( $result->num_rows > 0){
